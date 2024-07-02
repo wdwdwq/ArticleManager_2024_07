@@ -8,15 +8,15 @@ import java.util.Scanner;
 
 public class Main {
 
-    private static int lastArticleId = 0; // 클래스 변수로 선언
-    private static List<Article> articles = new ArrayList<>(); // 클래스 변수로 선언
+     static int lastArticleId = 3; // 클래스 변수로 선언
+     static List<Article> articles = new ArrayList<>(); // 클래스 변수로 선언
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
         System.out.println("==Article start==");
 
-
+        makeTestData(); // 테스트 데이터 생성
 
         while (true) {
             System.out.print("command) ");
@@ -50,7 +50,7 @@ public class Main {
                 if (articles.size() == 0) {
                     System.out.println("there is nothing???");
                 } else {
-                    System.out.println("  번호   /    날짜   /   제목   /   내용   ");
+                    System.out.println("  id   /    Date    /   title   /   body   ");
                     for (int i = articles.size() - 1; i >= 0; i--) {
                         Article article = articles.get(i);
                         if (Util.getNow().split(" ")[0].equals(article.getRegDate().split(" ")[0])) {
@@ -149,5 +149,12 @@ public class Main {
 
 
         sc.close();
+    }
+
+    private static void makeTestData() {
+        System.out.println("테스트 데이터 생성");
+        articles.add(new Article(1, "2023-12-12 12:12:12", "2023-12-12 12:12:12", "제목1", "내용1"));
+        articles.add(new Article(2, Util.getNow(), Util.getNow(), "제목2", "내용2"));
+        articles.add(new Article(3, Util.getNow(), Util.getNow(), "제목3", "내용3"));
     }
 }
