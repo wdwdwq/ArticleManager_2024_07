@@ -8,8 +8,8 @@ import java.util.Scanner;
 
 public class Main {
 
-     static int lastArticleId = 3; // 클래스 변수로 선언
-     static List<Article> articles = new ArrayList<>(); // 클래스 변수로 선언
+    static int lastArticleId = 3; // 클래스 변수로 선언
+    static List<Article> articles = new ArrayList<>(); // 클래스 변수로 선언
 
     public static void main(String[] args) {
 
@@ -66,14 +66,7 @@ public class Main {
 
                 int id = Integer.parseInt(cmd.split(" ")[2]);
 
-                Article foundArticle = null;
-
-                for (Article article : articles) {
-                    if (article.getId() == id) {
-                        foundArticle = article;
-                        break;
-                    }
-                }
+                Article foundArticle = getArticleById(id);
 
                 if (foundArticle == null) {
                     System.out.printf("Post number %d does not exist\n", id);
@@ -91,13 +84,7 @@ public class Main {
 
                 int id = Integer.parseInt(cmd.split(" ")[2]);
 
-                Article foundArticle = null;
-                for (Article article : articles) {
-                    if (article.getId() == id) {
-                        foundArticle = article;
-                        break;
-                    }
-                }
+                Article foundArticle = getArticleById(id);
 
                 if (foundArticle == null) {
                     System.out.printf("Post number %d does not exist\n", id);
@@ -123,14 +110,7 @@ public class Main {
                 System.out.println("==article delete==");
                 int id = Integer.parseInt(cmd.split(" ")[2]);
 
-                Article foundArticle = null;
-
-                for (Article article : articles) {
-                    if (article.getId() == id) {
-                        foundArticle = article;
-                        break;
-                    }
-                }
+                Article foundArticle = getArticleById(id);
 
                 if (foundArticle == null) {
                     System.out.printf("Post number %d does not exist\n", id);
@@ -151,10 +131,21 @@ public class Main {
         sc.close();
     }
 
+    private static Article getArticleById(int id) {
+        for (Article article : articles) {
+            if (article.getId() == id) {
+                return article;
+            }
+        }
+        return null;
+    }
+
     private static void makeTestData() {
         System.out.println("테스트 데이터 생성");
-        articles.add(new Article(1, "2023-12-12 12:12:12", "2023-12-12 12:12:12", "제목1", "내용1"));
-        articles.add(new Article(2, Util.getNow(), Util.getNow(), "제목2", "내용2"));
-        articles.add(new Article(3, Util.getNow(), Util.getNow(), "제목3", "내용3"));
+
+        for (int i = 1; i <= 3; i++) {
+            String now = Util.getNow();
+            articles.add(new Article(++lastArticleId, now, now, "제목" + i, "내용" + i));
+        }
     }
 }
