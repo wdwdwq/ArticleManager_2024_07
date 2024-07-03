@@ -13,4 +13,16 @@ public class Member {
     private String loginId;
     private String loginPw;
     private String name;
-}
+
+
+//@Override
+//public String toString() {
+//    return "Member{" +
+//            "id=" + id +
+//            ", regDate='" + regDate + '\'' +
+//            ", loginId='" + loginId + '\'' +
+//            ", loginPw='" + loginPw + '\'' +
+//            ", name='" + name + '\'' +
+//            '}';
+//}
+//}

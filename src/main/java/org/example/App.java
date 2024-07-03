@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.article.entity.Article;
+import org.example.article.entity.Member;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.Scanner;
 public class App {
     static int lastArticleId = 0; // 클래스 변수로 선언
     static List<Article> articles = new ArrayList<>(); // 클래스 변수로 선언
+    static int lastMemberId = 0;
+    static List<Member> members = new ArrayList<>();
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -28,7 +31,44 @@ public class App {
                 break;
             }
 
-            if (cmd.equals("article write")) {
+            if (cmd.equals("member join")) {
+                System.out.println("==Member joined==");
+                int id = lastMemberId + 1;
+                String regDate = Util.getNow();
+                String loginId = null;
+                while (true) {
+                    System.out.print("login ID : ");
+                    loginId = sc.nextLine().trim();
+                    if (loginChk(loginId) == false) {
+                        System.out.println("This ID is already taken");
+                        continue;
+                    }
+                    break;
+                }
+
+                String loginPw = null;
+                while (true) {
+                    System.out.print("login Pw :");
+                    loginPw = sc.nextLine().trim();
+                    System.out.print("login Pw Chk :");
+                    String loginPwChk = sc.nextLine().trim();
+
+                    if(loginPw.equals(loginPwChk) == false) {
+                        System.out.println("Check your password again please!!!");
+                        continue;
+                    }
+                    break;
+                }
+
+                System.out.println("name : ");
+                String name = sc.nextLine().trim();
+
+                Member member = new Member(id, regDate, loginId, name, loginPw);
+                members.add(member);
+
+                System.out.println(id + "Member number has been registered");
+                lastMemberId++;
+            } else if (cmd.equals("article write")) {
                 System.out.println("==article write==");
                 int id = lastArticleId + 1;
                 String regDate = Util.getNow();
@@ -146,6 +186,15 @@ public class App {
         System.out.println("== Article exit ==");
 
         sc.close();
+    }
+
+    private static boolean loginChk(String loginId) {
+        for (Member member : members) {
+            if (member.getLoginId().equals(loginId)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static Article getArticleById(int id) {
