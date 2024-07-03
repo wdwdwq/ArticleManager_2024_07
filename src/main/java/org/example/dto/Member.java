@@ -1,13 +1,15 @@
-package org.example.entity;
+package org.example.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Member {
+@EqualsAndHashCode(callSuper = true)
+public class Member extends Dto {
     private int id;
     private String regDate;
     private String loginId;

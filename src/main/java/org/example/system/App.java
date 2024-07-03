@@ -1,14 +1,15 @@
-package org.example;
+package org.example.system;
 
 import org.example.controller.ArticleController;
+import org.example.controller.Controller;
 import org.example.controller.MemberController;
 
 import java.util.Scanner;
 
-public class App extends Controller {
+public class App{
     public void run() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("==프로그램 시작==");
+        System.out.println("==Article Start==");
 
         MemberController memberController = new MemberController(sc);
         ArticleController articleController = new ArticleController(sc);
@@ -20,11 +21,11 @@ public class App extends Controller {
 
 
         while (true) {
-            System.out.print("명령어) ");
+            System.out.print("command) ");
             String cmd = sc.nextLine().trim();
 
             if (cmd.length() == 0) {
-                System.out.println("명령어를 입력하세요");
+                System.out.println("Enter the command");
                 continue;
             }
             if (cmd.equals("exit")) {
@@ -36,7 +37,7 @@ public class App extends Controller {
             String controllerName = cmdBits[0];
 
             if (cmdBits.length == 1) {
-                System.out.println("명령어 확인해");
+                System.out.println("Please check the command");
                 continue;
             }
 
@@ -47,27 +48,12 @@ public class App extends Controller {
             } else if (controllerName.equals("member")) {
                 controller = memberController;
             } else {
-                System.out.println("사용불가 명령어");
+                System.out.println("Command is wrong");
                 continue;
             }
 
             controller.doAction(cmd, actionMethodName);
 
-//            if (cmd.equals("member join")) {
-//                memberController.doJoin();
-//            } else if (cmd.equals("article write")) {
-//                articleController.doWrite();
-//            } else if (cmd.startsWith("article list")) {
-//                articleController.showList(cmd);
-//            } else if (cmd.startsWith("article detail")) {
-//                articleController.showDetail(cmd);
-//            } else if (cmd.startsWith("article delete")) {
-//                articleController.doDelete(cmd);
-//            } else if (cmd.startsWith("article modify")) {
-//                articleController.doModify(cmd);
-//            } else {
-//                System.out.println("This command does not exist!!!");
-//            }
         }
 
         System.out.println("== Article exit ==");

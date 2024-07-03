@@ -1,8 +1,7 @@
 package org.example.controller;
 
-import org.example.Controller;
-import org.example.Util;
-import org.example.entity.Member;
+import org.example.Util.Util;
+import org.example.dto.Member;
 
 import java.util.ArrayList;
 import java.util.List;
