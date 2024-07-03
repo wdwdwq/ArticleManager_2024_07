@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.Controller;
 import org.example.Util;
 import org.example.entity.Member;
 
@@ -7,17 +8,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MemberController {
-    Scanner sc;
-    List<Member> members;
+public class MemberController extends Controller {
+    private Scanner sc;
+    private List<Member> members;
+    private String cmd;
+
     private int lastMemberId = 3;
 
     public MemberController(Scanner sc) {
         this.sc = sc;
         members = new ArrayList<>();
     }
+    public void doAction(String cmd, String actionMethodName){
+        this.cmd = cmd;
 
-    public void doJoin() {
+        switch(actionMethodName){
+            case "join":
+                doJoin();
+                break;
+            default:
+                System.out.println("명령어 확인 (actionMethodName) 오류");
+                break;
+        }
+    }
+
+    private void doJoin() {
         System.out.println("==Member joined==");
         int id = lastMemberId + 1;
         String regDate = Util.getNow();
@@ -66,7 +81,7 @@ public class MemberController {
         return true;
     }
 
-    public void memberTest() {
+    public void makeTestData() {
         System.out.println("회원 테스트 데이터 생성");
 
         for (int i = 1; i <= 3; i++) {

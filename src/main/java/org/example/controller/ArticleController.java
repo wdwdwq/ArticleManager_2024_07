@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.Controller;
 import org.example.Util;
 import org.example.entity.Article;
 
@@ -7,18 +8,44 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ArticleController {
+public class ArticleController extends Controller {
 
     private Scanner sc;
     private List<Article> articles;
+    private String cmd;
+
     private int lastArticleId = 3;
 
     public ArticleController(Scanner sc) {
         this.sc = sc;
         articles = new ArrayList<>();
     }
+    public void doAction(String cmd, String actionMethodName){
+        this.cmd = cmd;
 
-    public void doWrite() {
+        switch (actionMethodName){
+            case "write":
+                doWrite();
+                break;
+            case "list":
+                showList();
+                break;
+            case "detail":
+                showDetail();
+                break;
+            case "modify":
+                doModify();
+                break;
+            case "delete":
+                doDelete();
+                break;
+            default:
+                System.out.println("명령어 확인 (actionMethodName) 오류");
+                break;
+        }
+    }
+
+    private void doWrite() {
         System.out.println("== article write ==");
         int id = lastArticleId + 1;
         String regDate = Util.getNow();
@@ -35,7 +62,7 @@ public class ArticleController {
         lastArticleId++;
     }
 
-    public void showList(String cmd) {
+    private void showList() {
         System.out.println("== article list ==");
         if (articles.size() == 0) {
             System.out.println("there is nothing???");
@@ -73,7 +100,7 @@ public class ArticleController {
         }
     }
 
-    public void showDetail(String cmd) {
+    private void showDetail() {
         System.out.println("== article detail ==");
         int id = Integer.parseInt(cmd.split(" ")[2]);
 
@@ -91,7 +118,7 @@ public class ArticleController {
         System.out.printf("body : %s\n", foundArticle.getBody());
     }
 
-    public void doDelete(String cmd) {
+    private void doDelete() {
         System.out.println("== article delete ==");
         int id = Integer.parseInt(cmd.split(" ")[2]);
 
@@ -106,7 +133,7 @@ public class ArticleController {
         System.out.printf("Post number %d was deleted\n", id);
     }
 
-    public void doModify(String cmd) {
+    private void doModify() {
         System.out.println("==article modify==");
 
         int id = Integer.parseInt(cmd.split(" ")[2]);
@@ -145,7 +172,7 @@ public class ArticleController {
         return null;
     }
 
-    public void articleTest() {
+    public void makeTestData() {
         System.out.println("Generating test data");
 
         for (int i = 1; i <= 3; i++) {
