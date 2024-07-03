@@ -1,4 +1,4 @@
-package org.example.article.entity;
+package org.example.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +13,7 @@ public class Member {
     private String loginId;
     private String loginPw;
     private String name;
-
+}
 
 //@Override
 //public String toString() {
