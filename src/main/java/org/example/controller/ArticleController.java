@@ -129,6 +129,11 @@ public class ArticleController extends Controller {
             return;
         }
 
+        if(foundArticle.getMemberId() != loginMember.getId()) {
+            System.out.println("권한 없음");
+            return;
+        }
+
         articles.remove(foundArticle);
         System.out.printf("Post number %d was deleted\n", id);
     }
@@ -142,6 +147,11 @@ public class ArticleController extends Controller {
 
         if (foundArticle == null) {
             System.out.printf("Post number %d does not exist\n", id);
+            return;
+        }
+
+        if(foundArticle.getMemberId() != loginMember.getId()) {
+            System.out.println("권한 없음");
             return;
         }
 

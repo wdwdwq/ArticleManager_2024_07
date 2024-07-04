@@ -59,7 +59,7 @@ public class App{
 
             switch (forLoginCHK){
                 case "member/login":
-                case "member/joinn":
+                case "member/join":
                     if(Controller.isLogined()){
                     System.out.println("로그아웃 필요");
                         continue;
