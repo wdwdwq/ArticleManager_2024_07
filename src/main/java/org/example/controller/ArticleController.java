@@ -54,7 +54,7 @@ public class ArticleController extends Controller {
         System.out.print("body : ");
         String body = sc.nextLine();
 
-        Article article = new Article(id, regDate, updateDate, title, body);
+        Article article = new Article(id, regDate, updateDate, loginMember.getId(), title, body);
         articles.add(article);
 
         System.out.println(id + " This post has been created");
@@ -82,19 +82,19 @@ public class ArticleController extends Controller {
                 }
             }
             if (printArticles.size() == 0) {
-                System.out.println("  id   /    Date    /   title   /   body   ");
+                System.out.println("  id   /    Date    /   User     /   title   /   body   ");
                 System.out.print("no articles found");
                 return;
             }
         }
 
-        System.out.println("  id   /    Date    /   작성자     /   title   /   body   ");
+        System.out.println("  id   /    Date    /   User     /   title   /   body   ");
         for (int i = printArticles.size() - 1; i >= 0; i--) {
             Article article = printArticles.get(i);
             if (Util.getNow().split(" ")[0].equals(article.getRegDate().split(" ")[0])) {
-                System.out.printf("  %d   /   %s      /   %s   /   %s  \n", article.getId(), article.getRegDate().split(" ")[1], article.getTitle(), article.getBody());
+                System.out.printf("  %d   /   %s    /   %d      /   %s   /   %s  \n", article.getId(), article.getRegDate().split(" ")[1],article.getMemberId(),article.getTitle(), article.getBody());
             } else {
-                System.out.printf("  %d   /   %s      /   %s   /   %s  \n", article.getId(), article.getRegDate().split(" ")[0], article.getTitle(), article.getBody());
+                System.out.printf("  %d   /   %s    /   %d      /   %s   /   %s  \n", article.getId(), article.getRegDate().split(" ")[0],article.getMemberId(), article.getTitle(), article.getBody());
             }
         }
     }
@@ -114,6 +114,7 @@ public class ArticleController extends Controller {
         System.out.println("ExistingDate : " + foundArticle.getRegDate());
         System.out.println("EditDate : " + foundArticle.getUpdateDate());
         System.out.printf("title : %s\n", foundArticle.getTitle());
+        System.out.println("user : " + foundArticle.getMemberId());
         System.out.printf("body : %s\n", foundArticle.getBody());
     }
 
@@ -175,7 +176,7 @@ public class ArticleController extends Controller {
         System.out.println("Generating test data");
         for (int i = 1; i <= 3; i++) {
             String now = Util.getNow();
-            articles.add(new Article(i, now, now, "제목" + i, "내용" + i));
+            articles.add(new Article(i, now, now,1, "제목" + i, "내용" + i));
         }
     }
 
