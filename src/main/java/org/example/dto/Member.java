@@ -1,20 +1,23 @@
 package org.example.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Setter
+@Getter
 @EqualsAndHashCode(callSuper = true)
 public class Member extends Dto {
-    private int id;
-    private String regDate;
     private String loginId;
     private String loginPw;
     private String name;
+
+
+    public Member(int id, String regDate, String loginId, String loginPw, String name) {
+        this.id= id;
+        this.regDate = regDate;
+        this.loginId = loginId;
+        this.loginPw = loginPw;
+        this.name = name;
+    }
 }
 
 //@Override

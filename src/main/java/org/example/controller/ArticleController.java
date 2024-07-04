@@ -24,6 +24,10 @@ public class ArticleController extends Controller {
 
         switch (actionMethodName){
             case "write":
+                if(isLogined() == false){
+                    System.out.println("로그인 필요");
+                    return;
+                }
                 doWrite();
                 break;
             case "list":
@@ -33,9 +37,17 @@ public class ArticleController extends Controller {
                 showDetail();
                 break;
             case "modify":
+                if(isLogined() == false){
+                    System.out.println("로그인 필요");
+                    return;
+                }
                 doModify();
                 break;
             case "delete":
+                if(isLogined() == false){
+                    System.out.println("로그인 필요");
+                    return;
+                }
                 doDelete();
                 break;
             default:
@@ -45,6 +57,7 @@ public class ArticleController extends Controller {
     }
 
     private void doWrite() {
+
         System.out.println("== article write ==");
         int id = lastArticleId + 1;
         String regDate = Util.getNow();
@@ -88,7 +101,7 @@ public class ArticleController extends Controller {
             }
         }
 
-        System.out.println("  id   /    Date    /   title   /   body   ");
+        System.out.println("  id   /    Date    /   작성자     /   title   /   body   ");
         for (int i = printArticles.size() - 1; i >= 0; i--) {
             Article article = printArticles.get(i);
             if (Util.getNow().split(" ")[0].equals(article.getRegDate().split(" ")[0])) {
@@ -173,12 +186,12 @@ public class ArticleController extends Controller {
 
     public void makeTestData() {
         System.out.println("Generating test data");
-
         for (int i = 1; i <= 3; i++) {
             String now = Util.getNow();
             articles.add(new Article(i, now, now, "제목" + i, "내용" + i));
         }
     }
+
 
 
 }

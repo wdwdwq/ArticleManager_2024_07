@@ -1,23 +1,25 @@
 package org.example.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Setter
+@Getter
 @EqualsAndHashCode(callSuper = true)
 public class Article extends Dto {
-    private int id;
-    private String regDate;
     private String updateDate;
     private String title;
     private String body;
 
+    public Article(int id, String regDate, String updateDate, String title, String body) {
+        this.id= id;
+        this.regDate = regDate;
+        this.updateDate = updateDate;
+        this.title = title;
+        this.body = body;
+    }
 }
+
 
 //    @Override
 //    public String toString() {
