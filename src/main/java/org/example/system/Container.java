@@ -12,7 +12,11 @@ public class Container {
 
     public static ArticleService articleService;
     public static MemberService memberService;
+
     public static void init() {
+        articleDao = new ArticleDao();
+        memberDao = new MemberDao();
+
         memberService = new MemberService();
         articleService = new ArticleService();
     }
