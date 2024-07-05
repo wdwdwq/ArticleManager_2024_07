@@ -137,7 +137,7 @@ public class ArticleController extends Controller {
             return;
         }
 
-        articles.remove(foundArticle);
+        articleService.remove(foundArticle);
         System.out.printf("Post number %d was deleted\n", id);
     }
 
