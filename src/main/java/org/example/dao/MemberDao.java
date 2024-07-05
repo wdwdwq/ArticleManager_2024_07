@@ -11,4 +11,9 @@ public class MemberDao {
     public MemberDao() {
         members = new ArrayList<>();
     }
+
+
+    public List<Member> getMembers() {
+        return members;
+    }
 }

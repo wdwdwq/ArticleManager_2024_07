@@ -3,9 +3,10 @@ package org.example.controller;
 import org.example.Util.Util;
 import org.example.dto.Article;
 import org.example.dto.Member;
+import org.example.service.ArticleService;
+import org.example.service.MemberService;
 import org.example.system.Container;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,14 +15,18 @@ public class ArticleController extends Controller {
     private Scanner sc;
     private List<Article> articles;
     private String cmd;
+    private List<Member> members;
+
+    private ArticleService articleService;
+    private MemberService memberService;
 
     private int lastArticleId = 3;
 
-    List<Member> members = Container.memberDao.members;
-
     public ArticleController(Scanner sc) {
+        this.articleService = Container.articleService;
+        this.memberService = Container.memberService;
+        members = memberService.getMembers();
         this.sc = sc;
-        articles = Container.articleDao.articles;
     }
     public void doAction(String cmd, String actionMethodName){
         this.cmd = cmd;
@@ -59,7 +64,8 @@ public class ArticleController extends Controller {
         String body = sc.nextLine();
 
         Article article = new Article(id, regDate, updateDate, loginMember.getId(), title, body);
-        articles.add(article);
+
+        articleService.add(article);
 
         System.out.println(id + " This post has been created");
         lastArticleId++;
@@ -67,30 +73,15 @@ public class ArticleController extends Controller {
 
     private void showList() {
         System.out.println("== article list ==");
-        if (articles.size() == 0) {
+        if (articleService.getSize() == 0) {
             System.out.println("there is nothing???");
             return;
         }
 
         String searchKeyword = cmd.substring("article list".length()).trim();
 
-        List<Article> printArticles = articles;
+        List<Article> printArticles = articleService.getForPrintArticles(searchKeyword);
 
-        if (searchKeyword.length() > 0) {
-            System.out.println("Search Keyword : " + searchKeyword);
-            printArticles = new ArrayList<>();
-
-            for (Article article : articles) {
-                if (article.getTitle().contains(searchKeyword)) {
-                    printArticles.add(article);
-                }
-            }
-            if (printArticles.size() == 0) {
-                System.out.println("  id   /    Date    /   User     /   title   /   body   ");
-                System.out.print("no articles found");
-                return;
-            }
-        }
             String writerName = null;
 
         System.out.println("  id   /    Date    /   User     /   title   /   body   ");
@@ -115,7 +106,7 @@ public class ArticleController extends Controller {
         System.out.println("== article detail ==");
         int id = Integer.parseInt(cmd.split(" ")[2]);
 
-        Article foundArticle = getArticleById(id);
+        Article foundArticle = articleService.getArticleById(id);
 
         if (foundArticle == null) {
             System.out.printf("Post number %d does not exist\n", id);
@@ -134,7 +125,7 @@ public class ArticleController extends Controller {
         System.out.println("== article delete ==");
         int id = Integer.parseInt(cmd.split(" ")[2]);
 
-        Article foundArticle = getArticleById(id);
+        Article foundArticle = articleService.getArticleById(id);
 
         if (foundArticle == null) {
             System.out.printf("Post number %d does not exist\n", id);
@@ -155,7 +146,7 @@ public class ArticleController extends Controller {
 
         int id = Integer.parseInt(cmd.split(" ")[2]);
 
-        Article foundArticle = getArticleById(id);
+        Article foundArticle = articleService.getArticleById(id);
 
         if (foundArticle == null) {
             System.out.printf("Post number %d does not exist\n", id);
@@ -185,20 +176,11 @@ public class ArticleController extends Controller {
 
     }
 
-    private Article getArticleById(int id) {
-        for (Article article : articles) {
-            if (article.getId() == id) {
-                return article;
-            }
-        }
-        return null;
-    }
-
     public void makeTestData() {
         System.out.println("Generating test data");
         for (int i = 1; i <= 3; i++) {
             String now = Util.getNow();
-            articles.add(new Article(i, now, now,1, "제목" + i, "내용" + i));
+            articleService.add(new Article(i, now, now,1, "제목" + i, "내용" + i));
         }
     }
 
